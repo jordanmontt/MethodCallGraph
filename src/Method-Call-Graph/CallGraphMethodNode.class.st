@@ -1,3 +1,6 @@
+"
+I am a node in the method call graph. I represent a method call
+"
 Class {
 	#name : 'CallGraphMethodNode',
 	#superclass : 'Object',
