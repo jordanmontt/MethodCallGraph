@@ -5,11 +5,12 @@ Class {
 		'stacks',
 		'profiler'
 	],
-	#category : 'Method-Call-Graph',
-	#package : 'Method-Call-Graph'
+	#category : 'Method-Call-Graph-Core',
+	#package : 'Method-Call-Graph',
+	#tag : 'Core'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 CallGraphProcessCallStack class >> onProfiler: aProfiler [
 
 	^ self new

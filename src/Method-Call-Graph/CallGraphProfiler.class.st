@@ -1,12 +1,14 @@
 Class {
 	#name : 'CallGraphProfiler',
-	#superclass : 'AbstractProfiler',
+	#superclass : 'Object',
 	#instVars : [
 		'callStack',
-		'nodes'
+		'nodes',
+		'instrumentator'
 	],
-	#category : 'Method-Call-Graph',
-	#package : 'Method-Call-Graph'
+	#category : 'Method-Call-Graph-Core',
+	#package : 'Method-Call-Graph',
+	#tag : 'Core'
 }
 
 { #category : 'accessing' }
@@ -15,7 +17,7 @@ CallGraphProfiler >> callStack [
 	^ callStack
 ]
 
-{ #category : 'initialization' }
+{ #category : 'private' }
 CallGraphProfiler >> enteringMethod: aMethod [
 
 	| node callerNode |
@@ -26,7 +28,7 @@ CallGraphProfiler >> enteringMethod: aMethod [
 	callStack push: node
 ]
 
-{ #category : 'initialization' }
+{ #category : 'private' }
 CallGraphProfiler >> exitingMethod [
 
 	callStack pop
@@ -40,20 +42,33 @@ CallGraphProfiler >> initialize [
 	callStack := CallGraphProcessCallStack new
 		profiler: self;
 		ensureStackIsInitialized;
-		yourself
+		yourself.
+	instrumentator := MpCallGraphInstrumentator onProfiler: self
+]
+
+{ #category : 'profiling' }
+CallGraphProfiler >> instrument [
+
+	instrumentator instrument
 ]
 
 { #category : 'accessing' }
 CallGraphProfiler >> instrumentator [
-
 	^ instrumentator
 ]
 
-{ #category : 'initialization' }
+{ #category : 'api' }
+CallGraphProfiler >> methodsToInstrument: aSetOfMethods [
+
+	instrumentator methodsToInstrument: aSetOfMethods
+]
+
+{ #category : 'private' }
 CallGraphProfiler >> nodeForMethod: method [
 
-	^ nodes at: method
-		ifAbsentPut: [ CallGraphMethodNode forMethod: method ]
+	^ nodes
+		  at: method
+		  ifAbsentPut: [ CallGraphMethodNode forMethod: method ]
 ]
 
 { #category : 'accessing' }
@@ -62,10 +77,47 @@ CallGraphProfiler >> nodes [
 	^ nodes
 ]
 
+{ #category : 'api' }
+CallGraphProfiler >> packageNamesToInstrument: aSetOfSymbols [
+
+	| methodsToInstrument |
+	methodsToInstrument := (aSetOfSymbols collect: #asPackage)
+			flatCollect: #methods
+			as: Set.
+	self methodsToInstrument: methodsToInstrument
+]
+
+{ #category : 'api' }
+CallGraphProfiler >> profile: aBlock [
+
+	self startProfiling.
+	^ aBlock ensure: [ self stopProfiling ]
+]
+
 { #category : 'private' }
 CallGraphProfiler >> rootNode [
 
 	^ nodes
-		at: #root
-		ifAbsentPut: [ CallGraphMethodNode forMethod: #root ]
+		  at: #root
+		  ifAbsentPut: [ CallGraphMethodNode forMethod: #root ]
+]
+
+{ #category : 'profiling' }
+CallGraphProfiler >> startProfiling [
+
+	self instrument.
+	MpMethodProxy enableInstrumentation
+]
+
+{ #category : 'profiling' }
+CallGraphProfiler >> stopProfiling [
+
+	MpMethodProxy disableInstrumentation.
+	self uninstrument
+]
+
+{ #category : 'profiling' }
+CallGraphProfiler >> uninstrument [
+
+	instrumentator uninstrument
 ]
