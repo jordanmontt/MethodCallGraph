@@ -4,25 +4,24 @@ Class {
 	#instVars : [
 		'packageMethods',
 		'profilingBlock',
-		'mpProfiler',
-		'testPackageNames'
+		'testPackageNames',
+		'callGraphProfiler'
 	],
 	#category : 'Method-Call-Graph-Tests',
 	#package : 'Method-Call-Graph-Tests'
 }
 
-{ #category : 'tests' }
+{ #category : 'running' }
 GraphCallerTest >> assertProfilerResultsForTotalNodes: totalNodes rootNodeCalls: rootNodeCalls [
 
 	| mpRootNode |
-	self assert: mpProfiler nodes size equals: totalNodes.
+	self assert: callGraphProfiler nodes size equals: totalNodes.
 
 	self
-		assert: mpProfiler instrumentator methodProxies size
+		assert: callGraphProfiler instrumentator methodProxies size
 		equals: (self numberOfMethodsForPackageNames: testPackageNames).
 
-	mpRootNode := (mpProfiler nodes values select: [ :e |
-		               e method = #root ]) first.
+	mpRootNode := (callGraphProfiler nodes values select: [ :e | e method = #root ]) first.
 
 	self assert: mpRootNode timesCalled equals: 0.
 	self assert: mpRootNode methodCalls size equals: rootNodeCalls
@@ -34,11 +33,11 @@ GraphCallerTest >> numberOfMethodsForPackageNames: packages [
 	^ ((packages collect: #asPackage) flatCollect: #methods as: Set) size
 ]
 
-{ #category : 'tests' }
+{ #category : 'running' }
 GraphCallerTest >> setPackagesToInstrument: packagesNames [
 
 	testPackageNames := packagesNames.
-	mpProfiler packageNamesToInstrument: testPackageNames
+	callGraphProfiler packageNamesToInstrument: testPackageNames
 ]
 
 { #category : 'running' }
@@ -54,7 +53,7 @@ GraphCallerTest >> setProfilingBlockForTests: testPackages [
 GraphCallerTest >> setUp [
 
 	super setUp.
-	mpProfiler := CallGraphProfiler new
+	callGraphProfiler := CallGraphProfiler new
 ]
 
 { #category : 'tests' }
@@ -63,7 +62,7 @@ GraphCallerTest >> testFuzzyMatcher [
 	self setProfilingBlockForTests: { 'FuzzyMatcher-Tests' asPackage }.
 	self setPackagesToInstrument: { 'FuzzyMatcher' }.
 
-	mpProfiler profile: profilingBlock.
+	callGraphProfiler profile: profilingBlock.
 
 	self assertProfilerResultsForTotalNodes: 24 rootNodeCalls: 53
 ]
@@ -74,7 +73,7 @@ GraphCallerTest >> testGraphAlgos [
 	self setProfilingBlockForTests: { 'AI-Algorithms-Graph-Tests' asPackage }.
 	self setPackagesToInstrument: { 'AI-Algorithms-Graph' }.
 
-	mpProfiler profile: profilingBlock.
+	callGraphProfiler profile: profilingBlock.
 
 	self assertProfilerResultsForTotalNodes: 155 rootNodeCalls: 725
 	
@@ -86,7 +85,7 @@ GraphCallerTest >> testMicrodown [
 	self setProfilingBlockForTests: { 'Microdown-Tests' asPackage }.
 	self setPackagesToInstrument: { 'Microdown' . 'Microdown-RichTextComposer' }.
 	
-	mpProfiler profile: profilingBlock.
+	callGraphProfiler profile: profilingBlock.
 
 	self assertProfilerResultsForTotalNodes: 496 rootNodeCalls: 7946
 	
@@ -98,7 +97,7 @@ GraphCallerTest >> testProfStef [
 	self setProfilingBlockForTests: { 'ProfStef-Tests' asPackage }.
 	self setPackagesToInstrument: { 'ProfStef-Core' }.
 	
-	mpProfiler profile: profilingBlock.
+	callGraphProfiler profile: profilingBlock.
 
 	self assertProfilerResultsForTotalNodes: 93 rootNodeCalls: 324
 	
@@ -111,7 +110,7 @@ GraphCallerTest >> testRewriteTool [
 		'NewTools-RewriterTools-Backend-Tests' asPackage }.
 	self setPackagesToInstrument: { 'NewTools-RewriterTools-Backend' . 'NewTools-RewriterTools' }.
 	
-	mpProfiler profile: profilingBlock.
+	callGraphProfiler profile: profilingBlock.
 
 	self assertProfilerResultsForTotalNodes: 129 rootNodeCalls: 341
 	
