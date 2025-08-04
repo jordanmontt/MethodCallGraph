@@ -18,7 +18,7 @@ Licensed under the MIT License.
 EpMonitor disableDuring: [
 	Metacello new
 		baseline: 'MethodCallGraph';
-		repository: 'github://jordanmontt/method-call-graph:main';
+		repository: 'github://jordanmontt/MethodCallGraph:main';
 		load ].
 ```
 
