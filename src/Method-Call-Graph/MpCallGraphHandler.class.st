@@ -20,13 +20,14 @@ MpCallGraphHandler class >> onMethod: aMethod profiler: aProfiler [
 ]
 
 { #category : 'evaluating' }
-MpCallGraphHandler >> afterMethod [
+MpCallGraphHandler >> afterExecutionWithReceiver: anObject arguments: anArrayOfObjects returnValue: returnValue [
 
-	profiler exitingMethod
+	profiler exitingMethod.
+	^ returnValue
 ]
 
 { #category : 'evaluating' }
-MpCallGraphHandler >> beforeMethod [
+MpCallGraphHandler >> beforeExecutionWithReceiver: anObject arguments: args [
 
 	profiler enteringMethod: method
 ]
