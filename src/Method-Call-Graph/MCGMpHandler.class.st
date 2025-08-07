@@ -1,5 +1,5 @@
 Class {
-	#name : 'MpCallGraphHandler',
+	#name : 'MCGMpHandler',
 	#superclass : 'MpHandler',
 	#instVars : [
 		'profiler',
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-MpCallGraphHandler class >> onMethod: aMethod profiler: aProfiler [
+MCGMpHandler class >> onMethod: aMethod profiler: aProfiler [
 
 	^ self new
 		method: aMethod;
@@ -20,26 +20,38 @@ MpCallGraphHandler class >> onMethod: aMethod profiler: aProfiler [
 ]
 
 { #category : 'evaluating' }
-MpCallGraphHandler >> afterExecutionWithReceiver: anObject arguments: anArrayOfObjects returnValue: returnValue [
+MCGMpHandler >> afterExecutionWithReceiver: anObject arguments: anArrayOfObjects returnValue: returnValue [
 
 	profiler exitingMethod.
 	^ returnValue
 ]
 
 { #category : 'evaluating' }
-MpCallGraphHandler >> beforeExecutionWithReceiver: anObject arguments: args [
+MCGMpHandler >> afterMethod [
+
+	profiler exitingMethod
+]
+
+{ #category : 'evaluating' }
+MCGMpHandler >> beforeExecutionWithReceiver: anObject arguments: args [
+
+	profiler enteringMethod: method
+]
+
+{ #category : 'evaluating' }
+MCGMpHandler >> beforeMethod [
 
 	profiler enteringMethod: method
 ]
 
 { #category : 'accessing' }
-MpCallGraphHandler >> method: aMethod [
+MCGMpHandler >> method: aMethod [
 
 	method := aMethod
 ]
 
 { #category : 'accessing' }
-MpCallGraphHandler >> profiler: aProfiler [
+MCGMpHandler >> profiler: aProfiler [
 
 	profiler := aProfiler
 ]

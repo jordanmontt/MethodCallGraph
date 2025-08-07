@@ -2,7 +2,7 @@
 I am a node in the method call graph. I represent a method call
 "
 Class {
-	#name : 'CallGraphMethodNode',
+	#name : 'MCGMethodNode',
 	#superclass : 'Object',
 	#instVars : [
 		'methodCalls',
@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-CallGraphMethodNode class >> forMethod: aMethod [
+MCGMethodNode class >> forMethod: aMethod [
 
 	^ self new
 		method: aMethod;
@@ -23,19 +23,19 @@ CallGraphMethodNode class >> forMethod: aMethod [
 ]
 
 { #category : 'initialization' }
-CallGraphMethodNode >> addCall [
+MCGMethodNode >> addCall [
 
 	timesCalled := timesCalled + 1
 ]
 
 { #category : 'initialization' }
-CallGraphMethodNode >> addCallTo: aNode [
+MCGMethodNode >> addCallTo: aNode [
 
 	methodCalls add: aNode
 ]
 
 { #category : 'initialization' }
-CallGraphMethodNode >> initialize [
+MCGMethodNode >> initialize [
 
 	super initialize.
 	methodCalls := Bag new.
@@ -43,32 +43,32 @@ CallGraphMethodNode >> initialize [
 ]
 
 { #category : 'accessing' }
-CallGraphMethodNode >> method [
+MCGMethodNode >> method [
 
 	^ method
 ]
 
 { #category : 'accessing' }
-CallGraphMethodNode >> method: aMethod [
+MCGMethodNode >> method: aMethod [
 
 	method := aMethod
 ]
 
 { #category : 'accessing' }
-CallGraphMethodNode >> methodCalls [
+MCGMethodNode >> methodCalls [
 
 	^ methodCalls
 ]
 
 { #category : 'printing' }
-CallGraphMethodNode >> printOn: aStream [
+MCGMethodNode >> printOn: aStream [
 
 	aStream << 'Node on: '.
 	method printOn: aStream
 ]
 
 { #category : 'accessing' }
-CallGraphMethodNode >> timesCalled [
+MCGMethodNode >> timesCalled [
 
 	^ timesCalled
 ]

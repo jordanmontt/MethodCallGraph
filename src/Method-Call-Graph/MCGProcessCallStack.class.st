@@ -1,5 +1,5 @@
 Class {
-	#name : 'CallGraphProcessCallStack',
+	#name : 'MCGProcessCallStack',
 	#superclass : 'ProcessLocalVariable',
 	#instVars : [
 		'stacks',
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-CallGraphProcessCallStack class >> onProfiler: aProfiler [
+MCGProcessCallStack class >> onProfiler: aProfiler [
 
 	^ self new
 		profiler: aProfiler;
@@ -19,7 +19,7 @@ CallGraphProcessCallStack class >> onProfiler: aProfiler [
 ]
 
 { #category : 'initialization' }
-CallGraphProcessCallStack >> ensureStackIsInitialized [
+MCGProcessCallStack >> ensureStackIsInitialized [
 	"A new thread requires a stack.
 	Initialize it and store it.
 	Otherwise, the process specific variable is stored in a weak array"
@@ -33,39 +33,39 @@ CallGraphProcessCallStack >> ensureStackIsInitialized [
 ]
 
 { #category : 'initialization' }
-CallGraphProcessCallStack >> initialize [
+MCGProcessCallStack >> initialize [
 
 	super initialize.
 	stacks := IdentitySet new
 ]
 
 { #category : 'removing' }
-CallGraphProcessCallStack >> pop [
+MCGProcessCallStack >> pop [
 
 	^ self value pop
 ]
 
 { #category : 'accessing' }
-CallGraphProcessCallStack >> profiler: aProfiler [
+MCGProcessCallStack >> profiler: aProfiler [
 
 	profiler := aProfiler
 ]
 
 { #category : 'adding' }
-CallGraphProcessCallStack >> push: aNode [
+MCGProcessCallStack >> push: aNode [
 
 	self ensureStackIsInitialized.
 	^ self value push: aNode
 ]
 
 { #category : 'accessing' }
-CallGraphProcessCallStack >> size [
+MCGProcessCallStack >> size [
 
 	^ self value size
 ]
 
 { #category : 'accessing' }
-CallGraphProcessCallStack >> top [
+MCGProcessCallStack >> top [
 
 	^ self value top
 ]

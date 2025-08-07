@@ -1,5 +1,5 @@
 Class {
-	#name : 'MpCallGraphInstrumentator',
+	#name : 'MCGMpInstrumentator',
 	#superclass : 'Object',
 	#instVars : [
 		'methodProxies',
@@ -11,13 +11,13 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-MpCallGraphInstrumentator class >> new [
+MCGMpInstrumentator class >> new [
 
 	^ self error: 'Use onProfiler: instead of new'
 ]
 
 { #category : 'as yet unclassified' }
-MpCallGraphInstrumentator class >> onProfiler: aProfiler [
+MCGMpInstrumentator class >> onProfiler: aProfiler [
 
 	^ self basicNew
 		  initialize;
@@ -26,26 +26,26 @@ MpCallGraphInstrumentator class >> onProfiler: aProfiler [
 ]
 
 { #category : 'initialization' }
-MpCallGraphInstrumentator >> initialize [
+MCGMpInstrumentator >> initialize [
 
 	super initialize.
 	methodProxies := Dictionary new
 ]
 
 { #category : 'profiling' }
-MpCallGraphInstrumentator >> instrument [
+MCGMpInstrumentator >> instrument [
 
 	methodProxies valuesDo: #install
 ]
 
 { #category : 'accessing' }
-MpCallGraphInstrumentator >> methodProxies [
+MCGMpInstrumentator >> methodProxies [
 
 	^ methodProxies
 ]
 
 { #category : 'accessing' }
-MpCallGraphInstrumentator >> methodsToInstrument: aSetOfMethods [
+MCGMpInstrumentator >> methodsToInstrument: aSetOfMethods [
 
 	(aSetOfMethods collect: [ :method | method unproxifiedMethod ])
 		do: [ :method |
@@ -55,25 +55,25 @@ MpCallGraphInstrumentator >> methodsToInstrument: aSetOfMethods [
 ]
 
 { #category : 'accessing' }
-MpCallGraphInstrumentator >> newHandler: aMethod [
+MCGMpInstrumentator >> newHandler: aMethod [
 
-	^ MpCallGraphHandler onMethod: aMethod profiler: profiler
+	^ MCGMpHandler onMethod: aMethod profiler: profiler
 ]
 
 { #category : 'accessing' }
-MpCallGraphInstrumentator >> newMethodProxy: aMethod [
+MCGMpInstrumentator >> newMethodProxy: aMethod [
 
 	^ MpMethodProxy onMethod: aMethod handler: (self newHandler: aMethod)
 ]
 
 { #category : 'accessing' }
-MpCallGraphInstrumentator >> profiler: aProfiler [
+MCGMpInstrumentator >> profiler: aProfiler [
 
 	profiler := aProfiler
 ]
 
 { #category : 'profiling' }
-MpCallGraphInstrumentator >> uninstrument [
+MCGMpInstrumentator >> uninstrument [
 
 	methodProxies valuesDo: #uninstall
 ]

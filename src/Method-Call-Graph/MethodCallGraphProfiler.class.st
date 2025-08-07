@@ -1,5 +1,5 @@
 Class {
-	#name : 'CallGraphProfiler',
+	#name : 'MethodCallGraphProfiler',
 	#superclass : 'Object',
 	#instVars : [
 		'callStack',
@@ -12,13 +12,13 @@ Class {
 }
 
 { #category : 'accessing' }
-CallGraphProfiler >> callStack [
+MethodCallGraphProfiler >> callStack [
 
 	^ callStack
 ]
 
 { #category : 'private' }
-CallGraphProfiler >> enteringMethod: aMethod [
+MethodCallGraphProfiler >> enteringMethod: aMethod [
 
 	| node callerNode |
 	callerNode := callStack top.
@@ -29,56 +29,56 @@ CallGraphProfiler >> enteringMethod: aMethod [
 ]
 
 { #category : 'private' }
-CallGraphProfiler >> exitingMethod [
+MethodCallGraphProfiler >> exitingMethod [
 
 	callStack pop
 ]
 
 { #category : 'initialization' }
-CallGraphProfiler >> initialize [
+MethodCallGraphProfiler >> initialize [
 
 	super initialize.
 	nodes := Dictionary new.
-	callStack := CallGraphProcessCallStack new
+	callStack := MCGProcessCallStack new
 		profiler: self;
 		ensureStackIsInitialized;
 		yourself.
-	instrumentator := MpCallGraphInstrumentator onProfiler: self
+	instrumentator := MCGMpInstrumentator onProfiler: self
 ]
 
 { #category : 'profiling' }
-CallGraphProfiler >> instrument [
+MethodCallGraphProfiler >> instrument [
 
 	instrumentator instrument
 ]
 
 { #category : 'accessing' }
-CallGraphProfiler >> instrumentator [
+MethodCallGraphProfiler >> instrumentator [
 	^ instrumentator
 ]
 
 { #category : 'api' }
-CallGraphProfiler >> methodsToInstrument: aSetOfMethods [
+MethodCallGraphProfiler >> methodsToInstrument: aSetOfMethods [
 
 	instrumentator methodsToInstrument: aSetOfMethods
 ]
 
 { #category : 'private' }
-CallGraphProfiler >> nodeForMethod: method [
+MethodCallGraphProfiler >> nodeForMethod: method [
 
 	^ nodes
 		  at: method
-		  ifAbsentPut: [ CallGraphMethodNode forMethod: method ]
+		  ifAbsentPut: [ MCGMethodNode forMethod: method ]
 ]
 
 { #category : 'accessing' }
-CallGraphProfiler >> nodes [
+MethodCallGraphProfiler >> nodes [
 
 	^ nodes
 ]
 
 { #category : 'api' }
-CallGraphProfiler >> packageNamesToInstrument: aSetOfSymbols [
+MethodCallGraphProfiler >> packageNamesToInstrument: aSetOfSymbols [
 
 	| methodsToInstrument |
 	methodsToInstrument := (aSetOfSymbols collect: #asPackage)
@@ -88,36 +88,36 @@ CallGraphProfiler >> packageNamesToInstrument: aSetOfSymbols [
 ]
 
 { #category : 'api' }
-CallGraphProfiler >> profile: aBlock [
+MethodCallGraphProfiler >> profile: aBlock [
 
 	self startProfiling.
 	^ aBlock ensure: [ self stopProfiling ]
 ]
 
 { #category : 'private' }
-CallGraphProfiler >> rootNode [
+MethodCallGraphProfiler >> rootNode [
 
 	^ nodes
 		  at: #root
-		  ifAbsentPut: [ CallGraphMethodNode forMethod: #root ]
+		  ifAbsentPut: [ MCGMethodNode forMethod: #root ]
 ]
 
 { #category : 'profiling' }
-CallGraphProfiler >> startProfiling [
+MethodCallGraphProfiler >> startProfiling [
 
 	self instrument.
 	MpMethodProxy enableInstrumentation
 ]
 
 { #category : 'profiling' }
-CallGraphProfiler >> stopProfiling [
+MethodCallGraphProfiler >> stopProfiling [
 
 	MpMethodProxy disableInstrumentation.
 	self uninstrument
 ]
 
 { #category : 'profiling' }
-CallGraphProfiler >> uninstrument [
+MethodCallGraphProfiler >> uninstrument [
 
 	instrumentator uninstrument
 ]
