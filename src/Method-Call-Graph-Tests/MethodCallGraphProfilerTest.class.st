@@ -1,5 +1,5 @@
 Class {
-	#name : 'GraphCallerTest',
+	#name : 'MethodCallGraphProfilerTest',
 	#superclass : 'TestCase',
 	#instVars : [
 		'packageMethods',
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : 'running' }
-GraphCallerTest >> assertProfilerResults [
+MethodCallGraphProfilerTest >> assertProfilerResults [
 
 	| mpRootNode |
 	self assert: callGraphProfiler nodes size > 20.
@@ -28,20 +28,20 @@ GraphCallerTest >> assertProfilerResults [
 ]
 
 { #category : 'running' }
-GraphCallerTest >> numberOfMethodsForPackageNames: packages [
+MethodCallGraphProfilerTest >> numberOfMethodsForPackageNames: packages [
 
 	^ ((packages collect: #asPackage) flatCollect: #methods as: Set) size
 ]
 
 { #category : 'running' }
-GraphCallerTest >> setPackagesToInstrument: packagesNames [
+MethodCallGraphProfilerTest >> setPackagesToInstrument: packagesNames [
 
 	testPackageNames := packagesNames.
 	callGraphProfiler packageNamesToInstrument: testPackageNames
 ]
 
 { #category : 'running' }
-GraphCallerTest >> setProfilingBlockForTests: testPackages [
+MethodCallGraphProfilerTest >> setProfilingBlockForTests: testPackages [
 
 	| testClasses testSuites |
 	testClasses := (testPackages flatCollect: #definedClasses) select: [ :e | e isTestCase ].
@@ -50,14 +50,14 @@ GraphCallerTest >> setProfilingBlockForTests: testPackages [
 ]
 
 { #category : 'running' }
-GraphCallerTest >> setUp [
+MethodCallGraphProfilerTest >> setUp [
 
 	super setUp.
 	callGraphProfiler := MethodCallGraphProfiler new
 ]
 
 { #category : 'tests' }
-GraphCallerTest >> testFuzzyMatcher [
+MethodCallGraphProfilerTest >> testFuzzyMatcher [
 
 	self setProfilingBlockForTests: { 'FuzzyMatcher-Tests' asPackage }.
 	self setPackagesToInstrument: { 'FuzzyMatcher' }.
@@ -68,7 +68,7 @@ GraphCallerTest >> testFuzzyMatcher [
 ]
 
 { #category : 'tests' }
-GraphCallerTest >> testGraphAlgos [
+MethodCallGraphProfilerTest >> testGraphAlgos [
 
 	self setProfilingBlockForTests: { 'AI-Algorithms-Graph-Tests' asPackage }.
 	self setPackagesToInstrument: { 'AI-Algorithms-Graph' }.
@@ -79,7 +79,7 @@ GraphCallerTest >> testGraphAlgos [
 ]
 
 { #category : 'tests' }
-GraphCallerTest >> testMicrodown [
+MethodCallGraphProfilerTest >> testMicrodown [
 
 	self setProfilingBlockForTests: { 'Microdown-Tests' asPackage }.
 	self setPackagesToInstrument: { 'Microdown' . 'Microdown-RichTextComposer' }.
@@ -90,7 +90,7 @@ GraphCallerTest >> testMicrodown [
 ]
 
 { #category : 'tests' }
-GraphCallerTest >> testProfStef [
+MethodCallGraphProfilerTest >> testProfStef [
 
 	self setProfilingBlockForTests: { 'ProfStef-Tests' asPackage }.
 	self setPackagesToInstrument: { 'ProfStef-Core' }.
@@ -101,7 +101,7 @@ GraphCallerTest >> testProfStef [
 ]
 
 { #category : 'tests' }
-GraphCallerTest >> testRewriteTool [
+MethodCallGraphProfilerTest >> testRewriteTool [
 
 	self setProfilingBlockForTests: { 'NewTools-RewriterTools-Tests' asPackage .
 		'NewTools-RewriterTools-Backend-Tests' asPackage }.
