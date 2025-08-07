@@ -62,7 +62,7 @@ MethodCallGraphProfilerTest >> testFuzzyMatcher [
 	self setProfilingBlockForTests: { 'FuzzyMatcher-Tests' asPackage }.
 	self setPackagesToInstrument: { 'FuzzyMatcher' }.
 
-	callGraphProfiler profile: profilingBlock.
+	callGraphProfiler profileOn: profilingBlock.
 
 	self assertProfilerResults
 ]
@@ -73,7 +73,7 @@ MethodCallGraphProfilerTest >> testGraphAlgos [
 	self setProfilingBlockForTests: { 'AI-Algorithms-Graph-Tests' asPackage }.
 	self setPackagesToInstrument: { 'AI-Algorithms-Graph' }.
 
-	callGraphProfiler profile: profilingBlock.
+	callGraphProfiler profileOn: profilingBlock.
 
 	self assertProfilerResults
 ]
@@ -84,7 +84,7 @@ MethodCallGraphProfilerTest >> testMicrodown [
 	self setProfilingBlockForTests: { 'Microdown-Tests' asPackage }.
 	self setPackagesToInstrument: { 'Microdown' . 'Microdown-RichTextComposer' }.
 	
-	callGraphProfiler profile: profilingBlock.
+	callGraphProfiler profileOn: profilingBlock.
 
 	self assertProfilerResults
 ]
@@ -95,7 +95,7 @@ MethodCallGraphProfilerTest >> testProfStef [
 	self setProfilingBlockForTests: { 'ProfStef-Tests' asPackage }.
 	self setPackagesToInstrument: { 'ProfStef-Core' }.
 	
-	callGraphProfiler profile: profilingBlock.
+	callGraphProfiler profileOn: profilingBlock.
 
 	self assertProfilerResults
 ]
@@ -107,7 +107,7 @@ MethodCallGraphProfilerTest >> testRewriteTool [
 		'NewTools-RewriterTools-Backend-Tests' asPackage }.
 	self setPackagesToInstrument: { 'NewTools-RewriterTools-Backend' . 'NewTools-RewriterTools' }.
 	
-	callGraphProfiler profile: profilingBlock.
+	callGraphProfiler profileOn: profilingBlock.
 
 	self assertProfilerResults
 ]

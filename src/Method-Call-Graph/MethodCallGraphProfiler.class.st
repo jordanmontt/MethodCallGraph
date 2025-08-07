@@ -94,7 +94,7 @@ MethodCallGraphProfiler >> packageNamesToInstrument: aSetOfSymbols [
 ]
 
 { #category : 'api' }
-MethodCallGraphProfiler >> profile: aBlock [
+MethodCallGraphProfiler >> profileOn: aBlock [
 
 	self startProfiling.
 	^ aBlock ensure: [ self stopProfiling ]
