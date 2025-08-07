@@ -57,6 +57,12 @@ MethodCallGraphProfiler >> instrumentator [
 	^ instrumentator
 ]
 
+{ #category : 'accessing' }
+MethodCallGraphProfiler >> instrumentator: anObject [
+
+	instrumentator := anObject
+]
+
 { #category : 'api' }
 MethodCallGraphProfiler >> methodsToInstrument: aSetOfMethods [
 
