@@ -53,7 +53,7 @@ GraphCallerTest >> setProfilingBlockForTests: testPackages [
 GraphCallerTest >> setUp [
 
 	super setUp.
-	callGraphProfiler := CallGraphProfiler new
+	callGraphProfiler := MethodCallGraphProfiler new
 ]
 
 { #category : 'tests' }
