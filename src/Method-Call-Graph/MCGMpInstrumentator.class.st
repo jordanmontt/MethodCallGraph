@@ -25,6 +25,18 @@ MCGMpInstrumentator class >> onProfiler: aProfiler [
 		  yourself
 ]
 
+{ #category : 'profiling' }
+MCGMpInstrumentator >> disableInstrumentation [
+
+	MpMethodProxy disableInstrumentation
+]
+
+{ #category : 'profiling' }
+MCGMpInstrumentator >> enableInstrumentation [
+
+	MpMethodProxy enableInstrumentation
+]
+
 { #category : 'initialization' }
 MCGMpInstrumentator >> initialize [
 
@@ -33,9 +45,16 @@ MCGMpInstrumentator >> initialize [
 ]
 
 { #category : 'profiling' }
-MCGMpInstrumentator >> instrument [
+MCGMpInstrumentator >> install [
 
 	methodProxies valuesDo: #install
+]
+
+{ #category : 'api - profiling' }
+MCGMpInstrumentator >> instrument [
+
+	self install.
+	self enableInstrumentation
 ]
 
 { #category : 'accessing' }
@@ -73,7 +92,14 @@ MCGMpInstrumentator >> profiler: aProfiler [
 ]
 
 { #category : 'profiling' }
-MCGMpInstrumentator >> uninstrument [
+MCGMpInstrumentator >> uninstall [
 
 	methodProxies valuesDo: #uninstall
+]
+
+{ #category : 'api - profiling' }
+MCGMpInstrumentator >> uninstrument [
+
+	self disableInstrumentation.
+	self uninstall
 ]

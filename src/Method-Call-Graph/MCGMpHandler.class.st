@@ -27,19 +27,7 @@ MCGMpHandler >> afterExecutionWithReceiver: anObject arguments: anArrayOfObjects
 ]
 
 { #category : 'evaluating' }
-MCGMpHandler >> afterMethod [
-
-	profiler exitingMethod
-]
-
-{ #category : 'evaluating' }
 MCGMpHandler >> beforeExecutionWithReceiver: anObject arguments: args [
-
-	profiler enteringMethod: method
-]
-
-{ #category : 'evaluating' }
-MCGMpHandler >> beforeMethod [
 
 	profiler enteringMethod: method
 ]
