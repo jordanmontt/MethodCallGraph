@@ -21,6 +21,8 @@ MethodCallGraphProfiler >> callStack [
 MethodCallGraphProfiler >> enteringMethod: aMethod [
 
 	| node callerNode |
+	callStack ensureStackIsInitialized.
+
 	callerNode := callStack top.
 	node := self nodeForMethod: aMethod.
 	node addCall.
