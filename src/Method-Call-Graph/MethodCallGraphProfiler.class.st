@@ -46,12 +46,6 @@ MethodCallGraphProfiler >> initialize [
 	instrumentator := MCGMpInstrumentator onProfiler: self
 ]
 
-{ #category : 'profiling' }
-MethodCallGraphProfiler >> instrument [
-
-	instrumentator instrument
-]
-
 { #category : 'accessing' }
 MethodCallGraphProfiler >> instrumentator [
 	^ instrumentator
@@ -111,19 +105,11 @@ MethodCallGraphProfiler >> rootNode [
 { #category : 'profiling' }
 MethodCallGraphProfiler >> startProfiling [
 
-	self instrument.
-	MpMethodProxy enableInstrumentation
+	instrumentator instrument
 ]
 
 { #category : 'profiling' }
 MethodCallGraphProfiler >> stopProfiling [
-
-	MpMethodProxy disableInstrumentation.
-	self uninstrument
-]
-
-{ #category : 'profiling' }
-MethodCallGraphProfiler >> uninstrument [
 
 	instrumentator uninstrument
 ]
