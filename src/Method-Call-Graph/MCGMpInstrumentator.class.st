@@ -66,7 +66,7 @@ MCGMpInstrumentator >> methodProxies [
 { #category : 'accessing' }
 MCGMpInstrumentator >> methodsToInstrument: aSetOfMethods [
 
-	(aSetOfMethods collect: [ :method | method unproxifiedMethod ])
+	(aSetOfMethods collect: [ :method | method ])
 		do: [ :method |
 			methodProxies
 				at: method
