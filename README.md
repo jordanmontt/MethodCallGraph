@@ -23,7 +23,9 @@ EpMonitor disableDuring: [
 ## Usage
 
 ```st
-callGraphProfiler := MethodCallGraphProfiler new.
-callGraphProfiler packageNamesToInstrument:  { 'Microdown' . 'Microdown-RichTextComposer' }. "Set target packages to instrument"
-callGraphProfiler profileOn: [ "Your application code here" ]
+| methodCallGraphProfiler |
+methodCallGraphProfiler := MethodCallGraphProfiler new.
+methodCallGraphProfiler methodsToInstrument: 'Spec2-Core' asPackage methods asSet.
+methodCallGraphProfiler profileOn: [ StPlaygroundPresenter open close ].
+methodCallGraphProfiler 
 ```
