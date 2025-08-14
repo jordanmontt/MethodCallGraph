@@ -2,10 +2,9 @@ Class {
 	#name : 'MethodCallGraphProfilerTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'packageMethods',
 		'profilingBlock',
-		'testPackageNames',
-		'callGraphProfiler'
+		'callGraphProfiler',
+		'methodsToInstrument'
 	],
 	#category : 'Method-Call-Graph-Tests',
 	#package : 'Method-Call-Graph-Tests'
@@ -19,7 +18,7 @@ MethodCallGraphProfilerTest >> assertProfilerResults [
 
 	self
 		assert: callGraphProfiler instrumentator methodProxies size
-		equals: (self numberOfMethodsForPackageNames: testPackageNames).
+		equals: methodsToInstrument size.
 
 	mpRootNode := (callGraphProfiler nodes values select: [ :e | e method = #root ]) first.
 
@@ -36,8 +35,8 @@ MethodCallGraphProfilerTest >> numberOfMethodsForPackageNames: packages [
 { #category : 'running' }
 MethodCallGraphProfilerTest >> setPackagesToInstrument: packagesNames [
 
-	testPackageNames := packagesNames.
-	callGraphProfiler packageNamesToInstrument: testPackageNames
+	methodsToInstrument := (packagesNames collect: #asPackage) flatCollect: #methods as: Set.
+	callGraphProfiler methodsToInstrument: methodsToInstrument
 ]
 
 { #category : 'running' }
