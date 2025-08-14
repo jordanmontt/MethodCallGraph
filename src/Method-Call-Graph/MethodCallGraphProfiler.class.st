@@ -80,16 +80,6 @@ MethodCallGraphProfiler >> nodes [
 ]
 
 { #category : 'api' }
-MethodCallGraphProfiler >> packageNamesToInstrument: aSetOfSymbols [
-
-	| methodsToInstrument |
-	methodsToInstrument := (aSetOfSymbols collect: #asPackage)
-			flatCollect: #methods
-			as: Set.
-	self methodsToInstrument: methodsToInstrument
-]
-
-{ #category : 'api' }
 MethodCallGraphProfiler >> profileOn: aBlock [
 
 	self startProfiling.
