@@ -10,8 +10,6 @@ All methods in the target application are instrumented. The tool records:
 
 Each invocation updates the graph in real time. The final graph captures method interactions and execution counts across threads.
 
-Licensed under the MIT License.
-
 ## How to install
 
 ```st
@@ -25,7 +23,7 @@ EpMonitor disableDuring: [
 ## Usage
 
 ```st
-callGraphProfiler := CallGraphProfiler new.
+callGraphProfiler := MethodCallGraphProfiler new.
 callGraphProfiler packageNamesToInstrument:  { 'Microdown' . 'Microdown-RichTextComposer' }. "Set target packages to instrument"
-callGraphProfiler profile: [ "Your application code here" ]
+callGraphProfiler profileOn: [ "Your application code here" ]
 ```
