@@ -94,6 +94,12 @@ MethodCallGraphProfiler >> rootNode [
 		  ifAbsentPut: [ MCGMethodNode forMethod: #root ]
 ]
 
+{ #category : 'api' }
+MethodCallGraphProfiler >> samplingRate: aFraction [
+
+    instrumentator samplingRate: aFraction
+]
+
 { #category : 'profiling' }
 MethodCallGraphProfiler >> startProfiling [
 

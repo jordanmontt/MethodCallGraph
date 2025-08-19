@@ -53,6 +53,8 @@ MethodCallGraphProfilerTest >> setUp [
 
 	super setUp.
 	callGraphProfiler := MethodCallGraphProfiler new
+		samplingRate: 1;
+		yourself
 ]
 
 { #category : 'tests' }

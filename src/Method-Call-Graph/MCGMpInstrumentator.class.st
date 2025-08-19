@@ -3,7 +3,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'methodProxies',
-		'profiler'
+		'profiler',
+		'samplingRate'
 	],
 	#category : 'Method-Call-Graph-Instrumentation',
 	#package : 'Method-Call-Graph',
@@ -47,7 +48,9 @@ MCGMpInstrumentator >> initialize [
 { #category : 'profiling' }
 MCGMpInstrumentator >> install [
 
-	methodProxies valuesDo: #install
+	methodProxies valuesDo: [ :mp | 
+		mp handler samplingRate: samplingRate.
+		mp install ]
 ]
 
 { #category : 'api - profiling' }
@@ -89,6 +92,12 @@ MCGMpInstrumentator >> newMethodProxy: aMethod [
 MCGMpInstrumentator >> profiler: aProfiler [
 
 	profiler := aProfiler
+]
+
+{ #category : 'api' }
+MCGMpInstrumentator >> samplingRate: aFraction [
+
+    samplingRate := aFraction
 ]
 
 { #category : 'profiling' }
