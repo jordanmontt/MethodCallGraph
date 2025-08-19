@@ -68,7 +68,7 @@ MCGMpHandler >> initialize [
 
     super initialize.
     samplingCounter := 0.
-    self samplingRate: 1 / 100
+    self samplingRate: MCGMpInstrumentator defaultSamplingRate
 ]
 
 { #category : 'accessing' }

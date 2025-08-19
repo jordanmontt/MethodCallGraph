@@ -12,6 +12,12 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+MCGMpInstrumentator class >> defaultSamplingRate [
+
+    ^ 1 / 100
+]
+
+{ #category : 'as yet unclassified' }
 MCGMpInstrumentator class >> new [
 
 	^ self error: 'Use onProfiler: instead of new'
@@ -41,8 +47,9 @@ MCGMpInstrumentator >> enableInstrumentation [
 { #category : 'initialization' }
 MCGMpInstrumentator >> initialize [
 
-	super initialize.
-	methodProxies := Dictionary new
+    super initialize.
+    methodProxies := Dictionary new.
+    samplingRate := self class defaultSamplingRate
 ]
 
 { #category : 'profiling' }
