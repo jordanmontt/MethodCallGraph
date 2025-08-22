@@ -33,6 +33,7 @@ MethodCallGraphProfiler >> enteringMethod: aMethod [
 { #category : 'private' }
 MethodCallGraphProfiler >> exitingMethod [
 
+	callStack ensureStackIsInitialized.
 	callStack pop
 ]
 
